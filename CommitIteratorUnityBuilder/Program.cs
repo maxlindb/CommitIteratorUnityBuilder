@@ -11,9 +11,14 @@
             const string gitRepoPath = "/Users/flow/pc-cthulhu-keeper";
             const string unityProjectPath = gitRepoPath;
             const string buildsRootPath = "/Users/flow/spambuilds";
+            const string remoteName = "origin"; // or the name of your remote
+            const string branchName = "main"; // or your target branch
 
             // Navigate to Git repository
             Directory.SetCurrentDirectory(gitRepoPath);
+
+            // Ensure we're starting from the newest commit on the remote
+            FetchLatestFromRemote(remoteName, branchName);
 
             // Get the last 50 commit hashes
             var commitHashes = GetLast50CommitHashes();
@@ -36,6 +41,18 @@
 
             // Optionally, checkout back to the main branch
             RunCommand("git", "checkout main");
+        }
+
+        static void FetchLatestFromRemote(string remoteName, string branchName)
+        {
+            // Fetch the latest changes from the remote without merging
+            RunCommand("git", $"fetch {remoteName}");
+            // Checkout the main branch or another branch you're targeting
+            RunCommand("git", $"checkout {branchName}");
+            // Reset the local branch to match the remote branch
+            RunCommand("git", $"reset --hard {remoteName}/{branchName}");
+            // Clean to remove untracked files and directories
+            RunCommand("git", "clean -fdx");
         }
 
         static string[] GetLast50CommitHashes()
