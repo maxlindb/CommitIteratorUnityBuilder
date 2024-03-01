@@ -47,9 +47,9 @@
         static void BuildUnityProject(string projectPath, string outputPath)
         {
             // Adjust the path to your Unity editor version and the build options as per your needs
-            string unityEditorPath = "/Applications/Unity/Hub/Editor/<UnityVersion>/Unity.app/Contents/MacOS/Unity";
+            string unityEditorPath = "/Applications/Unity/Hub/Editor/2022.3.2f1/Unity.app/Contents/MacOS/Unity";
             string unityArguments = $"-quit -batchmode -projectPath \"{projectPath}\" -buildOSXUniversalPlayer \"{outputPath}\"";
-            RunCommand(unityEditorPath, unityArguments);
+            Console.WriteLine(RunCommand(unityEditorPath, unityArguments));
         }
 
         static string RunCommand(string command, string arguments)
