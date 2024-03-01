@@ -20,6 +20,9 @@
 
             foreach (var hash in commitHashes)
             {
+                // Reset and clean the repository to ensure it's in a clean state
+                ResetAndCleanRepository();
+
                 // Checkout the commit
                 RunCommand("git", $"checkout {hash}");
 
@@ -63,6 +66,15 @@
                 process.WaitForExit();
                 return process.StandardOutput.ReadToEnd();
             }
+        }
+
+
+        static void ResetAndCleanRepository()
+        {
+            // Hard reset to discard any changes in the index and working directory
+            RunCommand("git", "reset --hard");
+            // Clean to remove untracked files and directories
+            RunCommand("git", "clean -fdx");
         }
     }
 
