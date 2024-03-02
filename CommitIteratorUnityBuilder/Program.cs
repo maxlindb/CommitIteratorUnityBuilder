@@ -11,12 +11,12 @@
         const string kBuildsRootPath = "/Users/flow/spambuilds";
         const string kRemoteName = "origin";
         const string kBranchName = "main";
-        const bool kDoCleanBuilds = false;
+        const bool kDoCleanBuilds = true;
 
-        const string kStartCommitHashPrefix = "62d69";
+        const string kStartCommitHashPrefix = "3d231dd7";
 
         const int kCommitNumberToTest = 100;
-        const int kStep = 10;
+        const int kStep = 1;
 
         const int kQueryCommitsAount = kCommitNumberToTest * kStep;
 
