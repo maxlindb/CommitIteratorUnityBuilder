@@ -47,7 +47,7 @@
                 // Define a unique build folder for this commit
                 var thisBatchFolder = "run_startFrom_" + hash.Substring(0, 9)+"_"+ fileNameSafeCommitComment+"_"+System.DateTime.UtcNow.ToFileTime();
                 string buildFolderPath = Path.Combine(kBuildsRootPath, thisBatchFolder, hash+"_"+ fileNameSafeCommitComment+".app");
-                //Directory.CreateDirectory(buildFolderPath);
+                new DirectoryInfo(buildFolderPath).Parent.Create();
 
                 Console.WriteLine("BUILDING " + new DirectoryInfo(buildFolderPath).Name);
                 // Build the Unity project
