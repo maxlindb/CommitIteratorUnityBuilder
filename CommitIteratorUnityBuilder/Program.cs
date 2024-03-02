@@ -117,6 +117,8 @@
 
         static string RunCommand(string command, string arguments)
         {
+            Console.WriteLine("RunCommand " + command + " " + arguments);
+
             ProcessStartInfo startInfo = new ProcessStartInfo("/bin/bash", $"-c \"{command} {arguments}\"")
             {
                 RedirectStandardOutput = true,
