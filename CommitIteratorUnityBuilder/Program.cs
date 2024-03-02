@@ -99,9 +99,9 @@
 
         static void BuildUnityProject(string projectPath, string outputPath)
         {
-            Console.WriteLine("FAKING A BUILD");
+            /*Console.WriteLine("FAKING A BUILD");
             Thread.Sleep(10000);
-            return;
+            return;*/
 
             // Adjust the path to your Unity editor version and the build options as per your needs
             string unityEditorPath = "/Applications/Unity/Hub/Editor/2022.3.2f1/Unity.app/Contents/MacOS/Unity";
