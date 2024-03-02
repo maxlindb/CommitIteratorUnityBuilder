@@ -82,7 +82,7 @@
 
         static string[] GetCommitsFromSpecificStart(string startCommitHashPrefix)
         {
-            string allCommits = RunCommand("git", "rev-list --all");
+            string allCommits = RunCommand("git", "rev-list --max-count=500");
             var allCommitHashes = allCommits.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
             // Find the index of the commit that starts with the specified prefix
             int startIndex = Array.FindIndex(allCommitHashes, hash => hash.StartsWith(startCommitHashPrefix));
