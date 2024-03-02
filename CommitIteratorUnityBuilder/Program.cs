@@ -13,9 +13,13 @@
         const string kBranchName = "main";
         const bool kDoCleanBuilds = false;
 
-        const string kStartCommitHashPrefix = "5acc904";
+        const string kStartCommitHashPrefix = "62d69";
 
-        static int step = 10;
+        const int kCommitNumberToTest = 100;
+        const int kStep = 10;
+
+        const int kQueryCommitsAount = kCommitNumberToTest * kStep;
+
 
 
         static void Main(string[] args)
@@ -28,10 +32,11 @@
 
             // Get the commit hashes, starting from a specific commit
             var commitHashes = GetCommitsFromSpecificStart(kStartCommitHashPrefix);
+            Console.WriteLine("Queried, got " + commitHashes + " commits");
 
             string thisBatchFolder = null;
 
-            for (int i = 0; i < commitHashes.Length; i += step)
+            for (int i = 0; i < commitHashes.Length; i += kStep)
             {
                 var hash = commitHashes[i];
                 Console.WriteLine("Start handling commit " + hash);
@@ -61,8 +66,12 @@
                 Console.WriteLine();
             }
 
+            Console.WriteLine("DONE");
+            System.Diagnostics.Process.Start("say", "\"Commit iteration done\"");
+
+
             // Optionally, checkout back to the main branch
-            RunCommand("git", "checkout main");
+            //RunCommand("git", "checkout main");
         }
 
         static void FetchLatestFromRemote(string remoteName, string branchName)
@@ -85,7 +94,7 @@
 
         static string[] GetCommitsFromSpecificStart(string startCommitHashPrefix)
         {
-            string allCommits = RunCommand("git", "rev-list --max-count=500 main");
+            string allCommits = RunCommand("git", "rev-list --max-count="+ 1000 + " main");
             var allCommitHashes = allCommits.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
             // Find the index of the commit that starts with the specified prefix
             int startIndex = Array.FindIndex(allCommitHashes, hash => hash.StartsWith(startCommitHashPrefix));
@@ -93,7 +102,7 @@
                 throw new System.Exception("Start commit not found!");                
             }
             // Return the range of commits from the start index
-            int length = Math.Min(50, allCommitHashes.Length - startIndex);
+            int length = Math.Min(kQueryCommitsAount, allCommitHashes.Length - startIndex);
             return allCommitHashes.Skip(startIndex).Take(length).ToArray();
         }
 
