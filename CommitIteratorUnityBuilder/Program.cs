@@ -13,10 +13,10 @@
         const string kBranchName = "main";
         const bool kDoCleanBuilds = true;
 
-        const string kStartCommitHashPrefix = "3d231dd7";
+        const string kStartCommitHashPrefix = "62d69";
 
         const int kCommitNumberToTest = 100;
-        const int kStep = 1;
+        const int kStep = 10;
 
         const int kQueryCommitsAount = kCommitNumberToTest * kStep;
 
