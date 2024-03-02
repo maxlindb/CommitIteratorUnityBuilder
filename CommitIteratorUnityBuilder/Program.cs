@@ -29,6 +29,8 @@
             // Get the commit hashes, starting from a specific commit
             var commitHashes = GetCommitsFromSpecificStart(kStartCommitHashPrefix);
 
+            string thisBatchFolder = null;
+
             for (int i = 0; i < commitHashes.Length; i += step)
             {
                 var hash = commitHashes[i];
@@ -40,12 +42,13 @@
                 // Checkout the commit
                 RunCommand("git", $"checkout {hash}");
 
-                var commitComment = RunCommand("git", "log -1 --pretty=format:%:s");
+                var commitComment = RunCommand("git", "log -1 --pretty=format:%s");
                 var fileNameSafeCommitComment = UnSpace(commitComment);
                 fileNameSafeCommitComment = fileNameSafeCommitComment.Substring(0, Math.Min(15, fileNameSafeCommitComment.Length));
 
-                // Define a unique build folder for this commit
-                var thisBatchFolder = "run_startFrom_" + hash.Substring(0, 9)+"_"+ fileNameSafeCommitComment+"_"+System.DateTime.UtcNow.ToFileTime();
+                if (thisBatchFolder == null)
+                    thisBatchFolder = "run_startFrom_" + hash.Substring(0, 9) + "_" + fileNameSafeCommitComment + "_" + System.DateTime.UtcNow.ToFileTime();
+
                 string buildFolderPath = Path.Combine(kBuildsRootPath, thisBatchFolder, hash+"_"+ fileNameSafeCommitComment+".app");
                 new DirectoryInfo(buildFolderPath).Parent.Create();
 
