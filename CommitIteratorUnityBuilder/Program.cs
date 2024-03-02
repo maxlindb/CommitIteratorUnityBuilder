@@ -85,25 +85,16 @@
 
         static string[] GetCommitsFromSpecificStart(string startCommitHashPrefix)
         {
-            string allCommits = RunCommand("git", "rev-list --max-count=500");
+            string allCommits = RunCommand("git", "rev-list --max-count=500 main");
             var allCommitHashes = allCommits.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
             // Find the index of the commit that starts with the specified prefix
             int startIndex = Array.FindIndex(allCommitHashes, hash => hash.StartsWith(startCommitHashPrefix));
-            if (startIndex == -1)
-            {
-                Console.WriteLine("Start commit not found, using the last 50 commits as fallback.");
-                // Fallback to the last 50 commits if the start commit is not found
-                return GetLast50CommitHashes();
+            if (startIndex == -1) {
+                throw new System.Exception("Start commit not found!");                
             }
             // Return the range of commits from the start index
             int length = Math.Min(50, allCommitHashes.Length - startIndex);
             return allCommitHashes.Skip(startIndex).Take(length).ToArray();
-        }
-
-        static string[] GetLast50CommitHashes()
-        {
-            string output = RunCommand("git", "log -n 50 --format=%H");
-            return output.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         static void BuildUnityProject(string projectPath, string outputPath)
