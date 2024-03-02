@@ -64,6 +64,8 @@
 
         static void FetchLatestFromRemote(string remoteName, string branchName)
         {
+            Console.WriteLine("Initial FetchLatestFromRemote");
+
             // Fetch the latest changes from the remote without merging
             RunCommand("git", $"fetch {remoteName}");
             // Checkout the main branch or another branch you're targeting
@@ -74,6 +76,8 @@
             //CLEAN Library at start even if not doing every build clean, for internal consistency
             // Clean to remove untracked files and directories
             RunCommand("git", "clean -fdx");
+
+            Console.WriteLine("Initial FetchLatestFromRemote done.");
         }
 
         static string[] GetCommitsFromSpecificStart(string startCommitHashPrefix)
