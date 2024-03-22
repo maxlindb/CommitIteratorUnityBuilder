@@ -12,11 +12,11 @@
         const string kRemoteName = "origin";
         const string kBranchName = "main";
 
-        const string kStartCommitHashPrefix = "df34";
+        const string kStartCommitHashPrefix = "4c1873eb0";
         const bool kDoCleanBuilds = true;
 
         const int kCommitNumberToTest = 1000;
-        const int kStep = 10;
+        const int kStep = 5;
 
         const int kQueryCommitsAount = kCommitNumberToTest * kStep;
 
